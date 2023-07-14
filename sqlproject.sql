@@ -149,7 +149,29 @@ END //
 delimiter ;
 call salem_students('salem',18);
 call salem_students('madurai',20);
+DELIMITER //
 
+CREATE TRIGGER update_total_marks
+AFTER INSERT
+ON mark_info
+FOR EACH ROW
+BEGIN
+    -- Calculate and update total marks for the student
+   
+    UPDATE student_info
+    SET total_marks = (SELECT SUM(finance + cost + corporate) FROM mark_info WHERE student_info.student_id = mark_info.student_id);
+    
+END //
+
+DELIMITER ;
+drop trigger update_total_marks;
+insert into mark_info values(14028,		28,		24,			95,		58);
+insert into student_info values(28,		'Raja',		'Madurai',		24,		13028,		'SC',		3);
+alter table student_info add total_marks int;
+describe student_info;
+select * from student_info;
+insert into student_info(student_id,student_name,city,age,roll_no ,community,course_id)  values(29,		'Rajaji',		'Madurai',		24,		13029,		'SC',		3);
+insert into mark_info values(14029,		29,		28,			96,		60);
 
 
 
