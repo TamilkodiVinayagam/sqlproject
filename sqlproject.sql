@@ -64,6 +64,9 @@ insert into mark_info values(14001,		1,		75,			76,		65),
 (14028,		28,		24,			95,		58);
 select * from student_info;
 select course_name from course_info;
+select substring(student_name,1,3) from student_info;
+select * from student_info where student_name regexp '[0-9]';
+select student_name from student_info where student_name regexp '[a-z]' or '[A-Z]';
 select * from mark_info;
 select distinct city from student_info;
 select count(distinct city) from student_info;
@@ -81,6 +84,8 @@ delete from mark_info where student_id=28;
 delete from student_info where student_id=28;
 select * from student_info limit 3;
 select * from student_info limit 10,5;
+select student_name from student_info where length(student_name)=6;
+select student_name from student_info where student_name like '______';
 select * from student_info order by student_id desc limit 0,5;
 select min(finance) as min_mark,max(finance) as max_mark from mark_info;
 select sum(finance),avg(finance) from mark_info;
@@ -126,7 +131,7 @@ end as grades
 
 from student_info inner join course_info on student_info.course_id=course_info.course_id inner join mark_info on student_info.student_id=mark_info.student_id where course_info.course_name='CMA' having
 results ='pass';
-select city,
+select
 case 
 when city='erode' then 1000
 when city='Tiruppur' then 1500
@@ -168,10 +173,16 @@ drop trigger update_total_marks;
 insert into mark_info values(14028,		28,		24,			95,		58);
 insert into student_info values(28,		'Raja',		'Madurai',		24,		13028,		'SC',		3);
 alter table student_info add total_marks int;
-describe student_info;
 select * from student_info;
 insert into student_info(student_id,student_name,city,age,roll_no ,community,course_id)  values(29,		'Rajaji',		'Madurai',		24,		13029,		'SC',		3);
 insert into mark_info values(14029,		29,		28,			96,		60);
+select version(), current_date();
+select database();
+create index i_student on student_info(student_id,student_name); 
+select student_id,student_name from student_info;
+describe student_info;
+show index from student_info from sqlproject;
+select student_id,student_name,city ,age ,roll_no ,community ,course_id , course_name from student_info natural join course_info;
 
 
 
